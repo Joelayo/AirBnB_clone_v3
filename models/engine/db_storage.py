@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """returns object based on class and Id"""
-        if cls id None or id is None:
+        if cls is None or id is None:
             return None
         if cls.id is None:
             return None
