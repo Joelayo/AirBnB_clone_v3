@@ -86,6 +86,6 @@ class FileStorage:
         else:
             count = 0
             for obj in objs_dict:
-                if obj.startswith(cls):
+                if obj.startswith(cls.__name__):
                     count += 1
             return count
