@@ -21,7 +21,7 @@ def hbnbStatus():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', strict_slashes=False)
+''' @app_views.route('/stats', strict_slashes=False)
 def hbnbStats():
     """hbnbStats"""
     return_dict = {}
@@ -37,7 +37,7 @@ def obj_counts():
     for i in hbnbText:
         obj_dict[i] = storage.count(hbnbText[i])
     return jsonify(obj_dict)
-
+'''
 
 if __name__ == "__main__":
     pass
