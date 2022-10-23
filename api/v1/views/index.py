@@ -30,4 +30,3 @@ def hbnbStats():
         "users": storage.count(User)
     }
     return jsonify(new_dict)
-
