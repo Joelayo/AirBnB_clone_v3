@@ -29,6 +29,7 @@ def hbnbStats():
         return_dict[key] = storage.count(value)
     return jsonify(return_dict)
 
+
 @app_views.route('/api/v1/stats', strict_slashes=False)
 def obj_counts():
     """return number of objects by type"""
@@ -36,6 +37,7 @@ def obj_counts():
     for i in hbnbText:
         obj_dict[i] = storage.count(hbnbText[i])
     return jsonify(obj_dict)
+
 
 if __name__ == "__main__":
     pass
