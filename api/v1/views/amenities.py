@@ -2,7 +2,6 @@
 """This module implements a view for amenities objects"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from models import amenity
 from models.amenity import Amenity
 import models
 
@@ -19,9 +18,9 @@ def retrieve_amenity_objs():
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
 def show_amenity(amenity_id):
     """ Retrieves an amenity object, raise a 404 error if not linked """
-    state = models.storage.get("Amenity", amenity_id)
-    if state:
-        return jsonify(state.to_dict())
+    amenity = models.storage.get("Amenity", amenity_id)
+    if amenity:
+        return jsonify(amenity.to_dict())
     abort(404)
 
 
@@ -29,11 +28,11 @@ def show_amenity(amenity_id):
 def delete_amenity(amenity_id):
     """ Deletes an amenity object in db storage """
     amenity = models.storage.get("Amenity", amenity_id)
-    if amenity:
-        amenity.delete()
-        models.storage.save()
-        return jsonify({})
-    abort(404)
+    if amenity is None:
+        abort(404)
+    amenity.delete()
+    models.storage.save()
+    return jsonify({})
 
 
 @app_views.route('/amenities/', strict_slashes=False, methods=['POST'])
