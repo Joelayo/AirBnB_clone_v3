@@ -6,7 +6,10 @@ from models.city import City
 import models
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['GET'])
+@app_views.route(
+    '/states/<state_id>/cities',
+    strict_slashes=False,
+    methods=['GET'])
 def retrieve_city_objs(state_id):
     """ Shows all city objects """
     state = models.storage.get("State", state_id)
