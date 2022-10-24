@@ -16,8 +16,7 @@ def retrieve_place_objs(city_id):
     city = models.storage.get("City", city_id)
     if city:
         placesList = []
-        eachPlace = models.storage.all("Place")
-        for value in eachPlace.values():
+        for value in models.storage.all("Place").values():
             if value.city_id == city_id:
                 placesList.append(value.to_dict())
         return jsonify(placesList)
