@@ -2,7 +2,6 @@
 """This module implements a view for amenities objects"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from models import user
 from models.user import User
 import models
 
@@ -45,8 +44,9 @@ def create_user():
         return jsonify({"error": "Missing email"}), 400
     if 'password' not in request.json:
         return jsonify({"error": "Missing password"}), 400
-    content = request.get_json()
-    user = User(**content)
+
+    data = request.get_json()
+    user = User(**data)
     user.save()
     return jsonify(user.to_dict()), 201
 
@@ -54,7 +54,7 @@ def create_user():
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def update_user(user_id):
     ''' Upddate the user object with the given amenity_id '''
-    user = models.storage.get("User", amenity_id)
+    user = models.storage.get("User", user_id)
     if user is None:
         abort(404)
     if not request.get_json():
