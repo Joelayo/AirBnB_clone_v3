@@ -9,10 +9,14 @@ import models
 @app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['GET'])
 def retrieve_city_objs(state_id):
     """ Shows all city objects """
-    myList = []
-    for value in models.storage.all("City").values():
-        myList.append(value.to_dict())
-    return jsonify(myList)
+    state = models.storage.get("State", state_id)
+    if state:
+        myList = []
+        for value in models.storage.all("City").values():
+            if value.state_id == state_id:
+                myList.append(value.to_dict())
+        return jsonify(myList)
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
