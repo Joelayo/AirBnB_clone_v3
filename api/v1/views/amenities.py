@@ -15,7 +15,10 @@ def retrieve_amenity_objs():
     return jsonify(myList)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route(
+    '/amenities/<amenity_id>',
+    strict_slashes=False,
+    methods=['GET'])
 def show_amenity(amenity_id):
     """ Retrieves an amenity object, raise a 404 error if not linked """
     amenity = models.storage.get("Amenity", amenity_id)
@@ -28,11 +31,11 @@ def show_amenity(amenity_id):
 def delete_amenity(amenity_id):
     """ Deletes an amenity object in db storage """
     amenity = models.storage.get("Amenity", amenity_id)
-    if amenity is None:
-        abort(404)
-    amenity.delete()
-    models.storage.save()
-    return jsonify({})
+    if amenity:
+        amenity.delete()
+        models.storage.save()
+        return jsonify({})
+    abort(404)
 
 
 @app_views.route('/amenities/', strict_slashes=False, methods=['POST'])
@@ -48,7 +51,10 @@ def create_amenity():
     return jsonify(amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route(
+    '/amenities/<amenity_id>',
+    strict_slashes=False,
+    methods=['PUT'])
 def update_amenity(amenity_id):
     ''' Upddate the amenity object with the given amenity_id '''
     amenity = models.storage.get("Amenity", amenity_id)
