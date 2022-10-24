@@ -14,6 +14,7 @@ def retrieve_state_objs():
         myList.append(value.to_dict())
     return jsonify(myList)
 
+
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def show_state(state_id):
     """ Retrieves a state object, raise a 404 error if not linked """
@@ -22,15 +23,17 @@ def show_state(state_id):
         return jsonify(state.to_dict())
     abort(404)
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ Deletes a state object in db storage """
     state = models.storage.get("State", state_id)
-    if state is None:
-        abort(404)
-    state.delete()
-    models.storage.save()
-    return jsonify({})
+    if state:
+        state.delete()
+        models.storage.save()
+        return jsonify({})
+    abort(404)
+
 
 @app_views.route('/states/', strict_slashes=False, methods=['POST'])
 def create_state():
@@ -43,6 +46,7 @@ def create_state():
     state = State(**content)
     state.save()
     return jsonify(state.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def update_state(state_id):
